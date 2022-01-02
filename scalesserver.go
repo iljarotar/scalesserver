@@ -1,4 +1,4 @@
-package scalesserver
+package main
 
 import "github.com/iljarotar/scalesalgorithm"
 
