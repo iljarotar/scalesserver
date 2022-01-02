@@ -1,7 +1,11 @@
 package main
 
-import "github.com/iljarotar/scalesalgorithm"
+import (
+	"fmt"
+
+	"github.com/iljarotar/scalesalgorithm"
+)
 
 func main() {
-	scalesalgorithm.GetScales()
+	fmt.Println(scalesalgorithm.GetScales(12, 8, 8))
 }
