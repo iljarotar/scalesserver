@@ -1,1 +1,1 @@
-web: go run scalesserver.go
+web: bin/scalesserver
