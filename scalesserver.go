@@ -5,16 +5,16 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 
 	"github.com/iljarotar/scalesalgorithm"
 )
 
 func main() {
+	port := os.Getenv("PORT")
 	http.HandleFunc("/", requestHandler)
-
-	fmt.Println("Starting server at port :8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
 
 func requestHandler(w http.ResponseWriter, r *http.Request) {
