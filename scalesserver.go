@@ -31,6 +31,7 @@ func requestHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	if n > 12 || k > 12 || n < 0 || k < 0 {
 		fmt.Fprintln(w, "Invalid input")
+		return
 	}
 	w.Header().Set("Content-Type", "application/json")
 	scales := scalesalgorithm.GetScales(n, k, k)
