@@ -26,8 +26,11 @@ func requestHandler(w http.ResponseWriter, r *http.Request) {
 	n, err1 := strconv.Atoi(r.FormValue("n"))
 	k, err2 := strconv.Atoi(r.FormValue("k"))
 	if err1 != nil || err2 != nil {
-		fmt.Fprintln(w, "Invalid input for n or k")
+		fmt.Fprintln(w, "Invalid input")
 		return
+	}
+	if n > 12 || k > 12 || n < 0 || k < 0 {
+		fmt.Fprintln(w, "Invalid input")
 	}
 	w.Header().Set("Content-Type", "application/json")
 	scales := scalesalgorithm.GetScales(n, k, k)
