@@ -45,5 +45,5 @@ func requestHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func enableCors(w *http.ResponseWriter) {
-	(*w).Header().Set("Access-Control-Allow-Origin", "https://all-those-scales.ilja-rotar.de/")
+	(*w).Header().Set("Access-Control-Allow-Origin", "https://all-those-scales.ilja-rotar.de")
 }
