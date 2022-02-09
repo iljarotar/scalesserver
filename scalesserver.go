@@ -18,6 +18,7 @@ func main() {
 }
 
 func requestHandler(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
 	if err := r.ParseForm(); err != nil {
 		fmt.Fprintf(w, "ParseForm error: %v", err)
 		return
@@ -38,4 +39,8 @@ func requestHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Write(jsonResponse)
 	return
+}
+
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
 }
