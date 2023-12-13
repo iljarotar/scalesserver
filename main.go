@@ -12,7 +12,7 @@ import (
 
 func main() {
 	var host string
-	flag.StringVar(&host, "host", "localhost", "The host the server binds to")
+	flag.StringVar(&host, "host", "0.0.0.0", "The host the server binds to")
 
 	var port string
 	flag.StringVar(&port, "port", "8080", "The port the server binds to")
