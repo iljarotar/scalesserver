@@ -33,7 +33,7 @@ func NewServer(c *ServerConfig) *server {
 }
 
 func (s *server) Serve() error {
-	s.logger.Infow("starting server", "host", s.host, "port", s.port)
+	s.logger.Infow("starting server", "host", s.host, "port", s.port, "maximum range", s.maxRange, "maximum number of notes", s.maxNum)
 	http.HandleFunc("/", s.requestHandler)
 	return http.ListenAndServe(fmt.Sprintf("%s:%s", s.host, s.port), nil)
 }

@@ -23,6 +23,8 @@ func main() {
 	var maxNum int
 	flag.IntVar(&maxNum, "max-num", 12, "The maximum input value for the notes field")
 
+	flag.Parse()
+
 	l, err := zap.NewProduction()
 	if err != nil {
 		fmt.Printf("unable to create logger, %v", err)
