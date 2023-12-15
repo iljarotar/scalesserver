@@ -1,11 +1,18 @@
 package server
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
+	"os"
+	"os/signal"
 	"strconv"
+	"syscall"
+	"time"
 
+	"github.com/gorilla/mux"
 	"github.com/iljarotar/scalesalgorithm"
 	"go.uber.org/zap"
 )
@@ -34,8 +41,31 @@ func NewServer(c *ServerConfig) *server {
 
 func (s *server) Serve() error {
 	s.logger.Infow("starting server", "host", s.host, "port", s.port, "maximum range", s.maxRange, "maximum number of notes", s.maxNum)
-	http.HandleFunc("/", s.requestHandler)
-	return http.ListenAndServe(fmt.Sprintf("%s:%s", s.host, s.port), nil)
+
+	handler := mux.NewRouter()
+	handler.HandleFunc("/", s.requestHandler).Methods("GET")
+	server := &http.Server{
+		Addr:    fmt.Sprintf("%s:%s", s.host, s.port),
+		Handler: handler,
+	}
+
+	done := make(chan os.Signal, 1)
+	signal.Notify(done, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
+
+	go func() {
+		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Fatalf("unable to start server, %v\n", err)
+		}
+
+	}()
+
+	sig := <-done
+	s.logger.Infow("shutting down server", "received signal", sig.String())
+
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	return server.Shutdown(ctx)
 }
 
 func (s *server) requestHandler(w http.ResponseWriter, req *http.Request) {

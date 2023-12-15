@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
 	"os"
 
 	"github.com/iljarotar/scalesserver/server"
@@ -42,5 +41,9 @@ func main() {
 	}
 
 	scalesServer := server.NewServer(serverConfig)
-	log.Fatal(scalesServer.Serve())
+
+	err = scalesServer.Serve()
+	if err != nil {
+		os.Exit(1)
+	}
 }
